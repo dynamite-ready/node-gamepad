@@ -7,8 +7,10 @@ Presently works on Windows and Mac OSX. A Linux version is in the works. I'll en
 Make sure you have Node JS installed, obviously. Node-Gyp is essential too.
 Copy the repo to your machine. Using the command terminal, 'cd' into the repo/module and run:
 
+```
 node-gyp configure
 node-gyp build
+```
 
 After doing so, you should be able to use the methods found in index.js.
 NPM support coming soon.
@@ -29,3 +31,5 @@ global.setInterval(function(){
     _myGamepad.events.on("buttondown", function(button){ console.log("Button: ", direction); })
 }, 200);
 ```
+
+Also insure that you take the OS specific SDL runtime library file, from the 'runtime-libraries' folder, and copy the file to the same root folder that you run 'node index.js' from.
