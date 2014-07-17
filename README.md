@@ -32,4 +32,4 @@ global.setInterval(function(){
 }, 200);
 ```
 
-Also insure that you take the OS specific SDL runtime library file, from the 'runtime-libraries' folder, and copy the file to the same root folder that you run 'node index.js' from.
+Also insure that you take the OS specific SDL runtime library file from the 'runtime-libraries' folder, and copy the file to the same root folder that you run 'node index.js' from.
