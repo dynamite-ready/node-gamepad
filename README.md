@@ -1,6 +1,6 @@
 #Node Gamepad v0.1.0
 
-A Node JS cross platform native module for gamepads, based on SDL 2.
+A Node JS cross platform native module for gamepads, based on SDL 2 (https://www.libsdl.org/).
 Presently works on Windows and Mac OSX. A Linux version is in the works. I'll also endeavour to provide more detail before long, but the basic instructions for use are as follows:
 
 ###Installation:
