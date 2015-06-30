@@ -8,7 +8,7 @@ Make sure you have Node JS installed, obviously. Node-Gyp is essential too.
 Copy the repo to your machine. Using the command terminal, 'cd' into the repo/module and run:
 
 ```
-node-gyp configure
+node-gyp configure --arch=ia32
 node-gyp build
 ```
 
