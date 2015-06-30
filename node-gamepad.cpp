@@ -24,13 +24,12 @@ Gamepad::Gamepad(unsigned int deviceNumber){
 	}
 }
 
-
 Gamepad::~Gamepad(){
 	// SDL_Quit();
 }
 
 NAN_METHOD(Gamepad::New){
-	HandleScope scope;
+	NanScope();
     Gamepad* currentGamepad = new Gamepad(args[0] -> ToInteger() -> Value());
     currentGamepad -> Wrap(args.This());
 	SDL_JoystickUpdate();
@@ -42,9 +41,9 @@ NAN_METHOD(Gamepad::getButtonStateArray){
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
 	if(currentGamepad -> object){
 		SDL_JoystickUpdate();
-		Handle<Array> value = Array::New(currentGamepad -> buttons);
+		Handle<Array> value = NanNew<Array>(currentGamepad -> buttons);
 		for(unsigned int i = 0; i < currentGamepad -> buttons; i++)
-			value -> Set(i, Integer::New(SDL_JoystickGetButton(currentGamepad -> object, i)));
+			value -> Set(i, NanNew<Integer>(SDL_JoystickGetButton(currentGamepad -> object, i)));
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -55,9 +54,9 @@ NAN_METHOD(Gamepad::getAxisStateArray){
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
 	if(currentGamepad -> object){
 		SDL_JoystickUpdate();
-		Handle<Array> value = Array::New(currentGamepad -> axes);
+		Handle<Array> value = NanNew<Array>(currentGamepad -> axes);
 		for(unsigned int i = 0; i < currentGamepad -> axes; i++)
-			value -> Set(i, Number::New(SDL_JoystickGetAxis(currentGamepad -> object, i)));
+			value -> Set(i, NanNew<Number>(SDL_JoystickGetAxis(currentGamepad -> object, i)));
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -69,7 +68,7 @@ NAN_METHOD(Gamepad::getAttachedStatus){
 	if(currentGamepad -> object){
 		SDL_JoystickUpdate();
 		SDL_bool connectionStatus = SDL_JoystickGetAttached(currentGamepad -> object);
-		Handle<Boolean> value = Boolean::New(connectionStatus == SDL_TRUE ? true : false);
+		Handle<Boolean> value = NanNew<Boolean>(connectionStatus == SDL_TRUE ? true : false);
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -86,7 +85,7 @@ NAN_METHOD(Gamepad::closeDevice){
 NAN_GETTER(Gamepad::getDeviceId){
 	NanScope();
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
-	Handle<Integer> value = Integer::New(currentGamepad -> deviceID);
+	Handle<Integer> value = NanNew<Integer>(currentGamepad -> deviceID);
 	NanReturnValue(value);
 }
 
@@ -94,7 +93,7 @@ NAN_GETTER(Gamepad::getDeviceName){
 	NanScope();
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
 	if(currentGamepad -> object){
-		Handle<String> value = String::New(currentGamepad -> deviceName);
+		Handle<String> value = NanNew<String>(currentGamepad -> deviceName);
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -103,7 +102,7 @@ NAN_GETTER(Gamepad::getButtonCount){
 	NanScope();
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
 	if(currentGamepad -> object){
-		Handle<Integer> value = Integer::New(currentGamepad -> buttons);
+		Handle<Integer> value = NanNew<Integer>(currentGamepad -> buttons);
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -112,7 +111,7 @@ NAN_GETTER(Gamepad::getAxesCount){
 	NanScope();
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
 	if(currentGamepad -> object){
-		Handle<Integer> value = Integer::New(currentGamepad -> axes);
+		Handle<Integer> value = NanNew<Integer>(currentGamepad -> axes);
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -120,7 +119,7 @@ NAN_GETTER(Gamepad::getAxesCount){
 NAN_GETTER(Gamepad::getDeviceCount){
 	NanScope();
 	SDL_JoystickUpdate();
-	Handle<Integer> value = Integer::New(SDL_NumJoysticks());
+	Handle<Integer> value = NanNew<Integer>(SDL_NumJoysticks());
 	NanReturnValue(value);
 }
 
@@ -128,7 +127,7 @@ NAN_GETTER(Gamepad::getDeviceIndex){
 	NanScope();
 	Gamepad* currentGamepad = ObjectWrap::Unwrap<Gamepad>(args.This());
 	if(currentGamepad -> object){
-		Handle<Integer> value = Integer::New(currentGamepad -> deviceIndex);
+		Handle<Integer> value = NanNew<Integer>(currentGamepad -> deviceIndex);
 		NanReturnValue(value);
 	} else NanReturnUndefined();
 }
@@ -139,10 +138,9 @@ void Gamepad::initialise(Handle<Object> exports){
 	// Start the SDL joystick subsystem.
 	SDL_Init(SDL_INIT_JOYSTICK);
 	
-	Local<String> name = NanSymbol("Gamepad");
+	Local<String> name = NanNew<String>("Gamepad");
 	// Specify and create the Javascript based object constructor.
-    Local<FunctionTemplate> constructorTemplate = FunctionTemplate::New(Gamepad::New);
-	NanAssignPersistent(FunctionTemplate, constructor, constructorTemplate);
+    Local<FunctionTemplate> constructorTemplate = NanNew<FunctionTemplate>(Gamepad::New);
     constructorTemplate -> InstanceTemplate() -> SetInternalFieldCount(1); // Brr...
     constructorTemplate -> SetClassName(name);
 	
@@ -151,37 +149,36 @@ void Gamepad::initialise(Handle<Object> exports){
 	proto -> SetInternalFieldCount(1);
 	
 	// Prototypal properties.
-	proto -> SetAccessor(NanSymbol("deviceId"), getDeviceId);
-	proto -> SetAccessor(NanSymbol("deviceIndex"), getDeviceIndex);
-	proto -> SetAccessor(NanSymbol("name"), getDeviceName);
-	proto -> SetAccessor(NanSymbol("buttons"), getButtonCount);
-	proto -> SetAccessor(NanSymbol("axes"), getAxesCount);
+	proto -> SetAccessor(NanNew<String>("deviceId"), getDeviceId);
+	proto -> SetAccessor(NanNew<String>("deviceIndex"), getDeviceIndex);
+	proto -> SetAccessor(NanNew<String>("name"), getDeviceName);
+	proto -> SetAccessor(NanNew<String>("buttons"), getButtonCount);
+	proto -> SetAccessor(NanNew<String>("axes"), getAxesCount);
 	
 	// Prototype methods...
 	proto -> Set(
-		NanSymbol("getButtonStateArray"),
-		FunctionTemplate::New(getButtonStateArray) -> GetFunction()
+		NanNew<String>("getButtonStateArray"),
+		NanNew<FunctionTemplate>(getButtonStateArray) -> GetFunction()
 	);
 	
 	proto -> Set(
-		NanSymbol("getAxisStateArray"),
-		FunctionTemplate::New(getAxisStateArray) -> GetFunction()
+		NanNew<String>("getAxisStateArray"),
+		NanNew<FunctionTemplate>(getAxisStateArray) -> GetFunction()
 	);
 
 	proto -> Set(
-		NanSymbol("getAttachedStatus"), 
-		FunctionTemplate::New(getAttachedStatus) -> GetFunction()
+		NanNew<String>("getAttachedStatus"), 
+		NanNew<FunctionTemplate>(getAttachedStatus) -> GetFunction()
 	);
 	
 	proto -> Set(
-		NanSymbol("close"), 
-		FunctionTemplate::New(closeDevice) -> GetFunction()
+		NanNew<String>("close"), 
+		NanNew<FunctionTemplate>(closeDevice) -> GetFunction()
 	);	
-	
 	
 	// To get the initial device count
 	// before deciding to create a new object or not.
-	exports -> SetAccessor(NanSymbol("deviceCount"), getDeviceCount);
+	exports -> SetAccessor(NanNew<String>("deviceCount"), getDeviceCount);
 	// Export the composed persistent container.
 	exports -> Set(name, constructorTemplate -> GetFunction());		
 }

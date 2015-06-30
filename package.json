@@ -1,21 +1,5 @@
 {
     "name": "node-gamepad",
-    "version": "0.1.0",
-    "main": "./build/Release/nodeGamepad",
-    "description": "A cross platform native NodeJS gamepad module.",
-    "keywords": ["joysticks", "gamepads", "joypads"],
-    "license": { "license" : "BSD-3-Clause" },
-    "author: {
-        "name": "Renrick Leonard Charles",
-        "email": "l_r_charles@hotmail.com",
-        "url": "http://www.raskie.com"
-    },
-    "bugs": {
-        "url": "http://github.com/owner/project/issues",
-        "email": "project@hostname.com"
-    },
-    "repository" : {
-        "type": "git",
-        "url": "https://github.com/dynamite-ready/node-gamepad.git"
-    }
+    "version": "1.0.0",
+    "main": "./build/Release/node-gamepad-native"
 }

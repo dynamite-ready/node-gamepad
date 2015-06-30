@@ -1,9 +1,11 @@
 {
     'target_defaults': {
+		"include_dirs": [".", "..", "nan"],
+		
 		"conditions": [
 			[
 				"OS == 'mac'", {
-					"include_dirs": [".", "..", "osx", "osx/include"],
+					"include_dirs": ["osx", "osx/include"],
 					"libraries": [
 						"-framework Carbon",
 						"-framework Cocoa",
@@ -15,7 +17,7 @@
 					
 			[
 				"OS == 'win'", {
-					"include_dirs": [".", "..", "windows", "windows/include"],
+					"include_dirs": ["windows", "windows/include"],
 					"libraries": [
 						"-lwinmm",
 						"-ldwmapi",
@@ -27,7 +29,7 @@
 			]
 		]
     },
-
+	
 	"targets": [
 		{
 			"target_name": "nodeGamepad",
