@@ -1,9 +1,9 @@
-#Node Gamepad v0.1.0
+# Node Gamepad v0.1.0
 
-A Node JS cross platform native module for gamepads, based on SDL 2 (https://www.libsdl.org/).
-Presently works on Windows and Mac OSX. A Linux version is in the works. I'll also endeavour to provide more detail before long, but the basic instructions for use are as follows:
+A Node JS cross platform native module for gamepads, based on SDL 2 (https://www.libsdl.org/). Please note, this repo hasn't been updated in years, if you get it running on a modern version of Node, I swear I'll buy you a drink.
+This module should work on Windows. It once worked on Mac OSX, but hasn't been updated since the mandated 64bit upgrade. I guess Windows simply is much better for certain things... There's not Linux comaptibility for now. The basic instructions for use are as follows:
 
-###Installation:
+## Installation:
 Make sure you have Node JS installed, obviously. Node-Gyp is essential too.
 Copy the repo to your machine. Using the command terminal, 'cd' into the repo/module and run:
 
@@ -15,7 +15,7 @@ node-gyp build
 After doing so, you should be able to use the methods found in index.js.
 NPM support coming soon.
 
-###Basic Usage:
+## Basic Usage:
 The module makes use of Node JS's event system. For a simple demonstration, set up a simple node project, create an index.js file, and in it, add:
 
 ```javascript
