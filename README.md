@@ -13,7 +13,6 @@ node-gyp build
 ```
 
 After doing so, you should be able to use the methods found in index.js.
-NPM support coming soon.
 
 ## Basic Usage:
 The module makes use of Node JS's event system. For a simple demonstration, set up a simple node project, create an index.js file, and in it, add:
